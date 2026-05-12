@@ -18,7 +18,7 @@
 | A-5 | 검색·이력·일괄 tool 검증 (#27~33) | 미완료 |
 | A-6 | 결과 분석 | 미완료 |
 
-단건 실행 결과: 01번 PASS (get_device_info, 182초) — 중단
+단건 실행 결과: 01번 PASS (get_device_info, 182초), 02번 PASS (get_device_info, 624초)
 
 ---
 
@@ -32,8 +32,8 @@
 ### A-2. 기본 5개 tool (#01~13)
 | # | 질문 | 기대 tool | 상태 |
 |---|------|-----------|------|
-| 01 | 장비 ID 54의 상세 정보 알려줘 | get_device_info | ✓ PASS |
-| 02 | 데이터센터 1번, 장비 번호 55의 스펙이랑 위치 알고 싶어 | get_device_info | 미실행 |
+| 01 | 장비 ID 54의 상세 정보 알려줘 | get_device_info | ✓ PASS (182초) |
+| 02 | 데이터센터 1번, 장비 번호 55의 스펙이랑 위치 알고 싶어 | get_device_info | ✓ PASS (624초) |
 | 03 | 장비 56번이 어디 있고 어떤 타입인지 확인해줘 | get_device_info | 미실행 |
 | 04 | 알람 ID 5732176의 상세 내용 보여줘 | get_alarm_detail | 미실행 |
 | 05 | 알람 번호 5732179의 원인 메시지 확인해줘 | get_alarm_detail | 미실행 |
@@ -99,3 +99,4 @@ uv run maria-mcp &
 # Test A 실행
 PYTHONUNBUFFERED=1 uv run python /tmp/test_a.py
 ```
+# test
