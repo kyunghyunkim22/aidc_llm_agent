@@ -1,0 +1,1 @@
+- [FastMCP 3.x 미들웨어 주입 방식](project_fastmcp_middleware.md) — mcp.run(middleware=[Middleware(Class)]) 로 HTTP 레벨 인증 주입 (3.2.4 검증)

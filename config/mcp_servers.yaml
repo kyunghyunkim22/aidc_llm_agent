@@ -1,0 +1,25 @@
+# LangGraph 에이전트가 연결할 MCP 서버 목록.
+# 각 항목은 langchain_mcp_adapters 의 connection dict 형태.
+#
+# transport:
+#   streamable_http (FastMCP transport="http") — 기본
+#   sse             (FastMCP transport="sse")
+#   stdio           (서브프로세스)
+
+maria_mcp:
+  transport: streamable_http
+  url: "${MARIA_MCP_URL}"
+  headers:
+    X-API-Key: "${MCP_API_KEY}"
+
+# 추후 모듈 구현 시 활성화
+# rag_mcp:
+#   transport: streamable_http
+#   url: http://localhost:8002/mcp/
+#   headers:
+#     X-API-Key: "${MCP_API_KEY}"
+# metric_mcp:
+#   transport: streamable_http
+#   url: http://localhost:8003/mcp/
+#   headers:
+#     X-API-Key: "${MCP_API_KEY}"

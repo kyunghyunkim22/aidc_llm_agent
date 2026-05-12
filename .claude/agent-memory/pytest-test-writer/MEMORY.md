@@ -1,0 +1,2 @@
+- [lru_cache patch scope](feedback_lru_cache_patch_scope.md) — patch 블록 안에 TestClient.get() 까지 포함해야 함, 미포함 시 dispatch 시점에 patch 해제됨
+- [maria_mcp 테스트 구조](project_maria_mcp_test_structure.md) — fixture 의존 관계, DB/미들웨어 분리 방법, timezone 처리, MCP_API_KEY 주입

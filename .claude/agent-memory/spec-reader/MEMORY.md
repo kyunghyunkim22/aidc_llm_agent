@@ -1,0 +1,1 @@
+- [maria_mcp spec 분석 결과](maria_mcp_analysis.md) — 6개 tool, 4개 모델, 7개 모듈, 읽기 전용, llm_analysis_result 스키마 TBD
