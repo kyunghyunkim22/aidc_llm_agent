@@ -215,6 +215,62 @@ aidc_llm_agent/
 - CLAUDE.md의 패턴/규칙 변경은 사람 승인 후에만 수정
 - 불일치 발견 시 임의로 맞추지 말고 [CONFLICT] 주석으로 표시 후 보고
 
+---
+
+## Git 사용 지침
+
+### 슬래시 커맨드
+- `/commit` : 변경 내용 분석 → 메시지 초안 제시 → 사용자 확인 → 실행
+- `/pr`      : 전체 커밋 분석 → PR 제목/본문/테스트플랜 자동 생성 → `gh pr create` 실행
+
+### 커밋 원칙
+- 커밋은 하나의 논리적 변경 단위만 포함
+- `git add .` 사용 금지 — 변경 파일을 명시적으로 지정
+- 커밋 전 항상 `git diff --staged` 로 내용 확인 후 보고
+- 작업 도중 자동 커밋 금지 — 반드시 사용자 승인 후 커밋
+
+### 커밋 메시지 형식
+- 형식: `<type>(<scope>): <subject>`
+- type: `feat` / `fix` / `refactor` / `docs` / `chore` / `test`
+- 제목 50자 이내, 본문에 변경 이유 포함
+- 한국어 작성 허용
+- 예시: `feat(api): 사용자 인증 엔드포인트 추가`
+
+### 브랜치 정책
+- `main` / `master` 직접 커밋 금지
+- 브랜치 네이밍: `<type>/<description>`
+- 예시: `feat/user-auth`, `fix/celery-timeout`, `hotfix/login-bug`
+
+### 안전 장치
+- `git push --force` — 명시적 지시 없이 절대 실행 금지
+- `git reset --hard`, `git clean -f` — 명시적 지시 없이 절대 실행 금지
+- `git commit --no-verify` — pre-commit hook 우회 금지
+- `git rebase`, `git commit --amend` — 사전 확인 필수
+- `.env`, `*.key`, `*secret*`, `credentials*` 패턴 파일은 커밋 제안 자체를 하지 말 것
+
+### Git Worktree
+- 병렬 작업 필요 시 `claude --worktree <이름>` 사용
+- 생성 위치: `.claude/worktrees/<이름>/`
+- 작업 재개: `claude --from-pr <PR번호>`
+
+### GitHub CLI 연동
+- `/pr` 커맨드 사용 전 `gh auth login` 필요
+- GitLab / Bitbucket 환경에서는 `/pr` 미지원 — 수동 push 후 웹에서 MR 생성
+- PR 본문에 관련 이슈 번호 및 테스트 계획 포함
+
+### PR 생성 규칙
+- feature 브랜치에서만 PR 생성 (`main` 직접 불가)
+- PR 본문 형식:
+```
+  ## Summary
+  - 변경 내용 요약
+
+  ## Test plan
+  - [ ] 테스트 항목
+
+  🤖 Generated with Claude Code
+```
+
 # CLAUDE.md
 
 Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
