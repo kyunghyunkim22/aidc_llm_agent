@@ -1,0 +1,21 @@
+services:
+  vllm:
+    image: vllm/vllm-openai:gemma4
+    container_name: vllm-gemma4
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    network_mode: host
+    ipc: host
+    volumes:
+      - /home/aidc/vllm/models:/models
+    command: >
+      --model /models/gemma-4-e4b-it
+      --dtype bfloat16
+      --quantization fp8
+      --max-model-len 8192
+      --gpu-memory-utilization 0.90
+      --port 8000
+      --enable-auto-tool-choice
+      --tool-call-parser gemma4
+    restart: unless-stopped

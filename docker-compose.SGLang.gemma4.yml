@@ -1,0 +1,25 @@
+services:
+  sglang:
+    image: lmsysorg/sglang:dev
+    container_name: sglang
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    network_mode: host
+    ipc: host
+    volumes:
+      - /home/aidc/vllm/models:/models
+      - ~/.cache/huggingface:/root/.cache/huggingface
+    command: >
+      python -m sglang.launch_server
+      --model-path /models/Qwen3-8B-AWQ
+      --dtype float16
+      --quantization awq
+      --context-length 16384
+      --mem-fraction-static 0.88
+      --port 8001
+      --host 0.0.0.0
+      --reasoning-parser qwen3
+      --tool-call-parser qwen25
+      --disable-piecewise-cuda-graph
+    restart: unless-stopped
