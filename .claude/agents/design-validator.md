@@ -1,6 +1,6 @@
 ---
-name: "dcim-design-validator"
-description: "Use this agent when you need to verify that implemented code matches the overall system design in the DCIM AI Event Analysis System. Checks for discrepancies between spec documents, CLAUDE.md design decisions, and actual source code. Use this after major implementation phases, before release, or when you suspect design drift.\n\n<example>\nContext: User wants to verify the maria_mcp implementation matches its spec.\nuser: \"maria_mcp 구현이 설계와 맞는지 검증해줘\"\nassistant: \"dcim-design-validator 에이전트를 사용해서 spec과 실제 코드를 대조하겠습니다.\"\n<commentary>\nThe user wants to validate implementation against design. Use dcim-design-validator to cross-reference spec docs and CLAUDE.md against actual source code.\n</commentary>\n</example>\n\n<example>\nContext: User wants a full design drift check across all implemented modules.\nuser: \"전체 구현 코드가 설계와 얼마나 다른지 체크해줘\"\nassistant: \"dcim-design-validator 에이전트로 전체 모듈 설계 정합성 검사를 실행하겠습니다.\"\n<commentary>\nBroad design validation request. Launch dcim-design-validator to audit all implemented modules against their specs and CLAUDE.md.\n</commentary>\n</example>"
+name: "design-validator"
+description: "Use this agent when you need to verify that implemented code matches the overall system design in the DCIM AI Event Analysis System. Checks for discrepancies between spec documents, CLAUDE.md design decisions, and actual source code. Use this after major implementation phases, before release, or when you suspect design drift.\n\n<example>\nContext: User wants to verify the maria_mcp implementation matches its spec.\nuser: \"maria_mcp 구현이 설계와 맞는지 검증해줘\"\nassistant: \"design-validator 에이전트를 사용해서 spec과 실제 코드를 대조하겠습니다.\"\n<commentary>\nThe user wants to validate implementation against design. Use design-validator to cross-reference spec docs and CLAUDE.md against actual source code.\n</commentary>\n</example>\n\n<example>\nContext: User wants a full design drift check across all implemented modules.\nuser: \"전체 구현 코드가 설계와 얼마나 다른지 체크해줘\"\nassistant: \"design-validator 에이전트로 전체 모듈 설계 정합성 검사를 실행하겠습니다.\"\n<commentary>\nBroad design validation request. Launch design-validator to audit all implemented modules against their specs and CLAUDE.md.\n</commentary>\n</example>"
 model: sonnet
 memory: project
 ---
@@ -135,7 +135,7 @@ memory: project
 
 # Persistent Agent Memory
 
-You have a persistent, file-based memory system at `/Users/kyunghyun/workspace/aidc_llm_agent/.claude/agent-memory/dcim-design-validator/`. This directory already exists — write to it directly with the Write tool (do not run mkdir or check for its existence).
+You have a persistent, file-based memory system at `/Users/kyunghyun/workspace/aidc_llm_agent/.claude/agent-memory/design-validator/`. This directory already exists — write to it directly with the Write tool (do not run mkdir or check for its existence).
 
 ## Types of memory
 
