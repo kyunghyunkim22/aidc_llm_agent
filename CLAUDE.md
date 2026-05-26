@@ -30,11 +30,15 @@
 
 ## 서버 환경
 
-| 항목 | 내용 |
-|------|------|
-| OS | Rocky Linux 8 |
-| CPU 서버 | 4대 — 애플리케이션 및 MCP 서버 실행 |
-| GPU 서버 | 1대 — LLM 서빙 전용 (vLLM) |
+| 항목 | 내용                                                                                                        |
+|------|-----------------------------------------------------------------------------------------------------------|
+| OS | Rocky Linux 8                                                                                             |
+| CPU 서버 | 4대 — 애플리케이션 및 MCP 서버 실행                                                                                   |
+| GPU 서버 | 1대 — LLM 서빙 전용 (vLLM)                                                                                     |
+| GPU | NVIDIA A2, VRAM 15,356 MiB (약 15GB), CUDA 12.8, Driver 550.144.03                                         |
+| GPU 서버 CPU | 32 cores (16 cores/socket × 1 socket, 2 threads/core)                                                     |
+| GPU 서버 RAM | 250GB 총량, Swap 127GB                                                                                      |
+| vLLM max-model-len | **8192 (기존 설정)** — fp8 양자화 + gpu-memory-utilization 0.90 기준 VRAM 96% 사용. CPU RAM 250GB 활용한 오프로딩으로 확장 검토 중 |
 
 ---
 
@@ -132,6 +136,7 @@
 - **타입힌트**: 모든 함수에 필수
 - **설정**: 환경변수 + `config.yaml` 조합. 시크릿은 환경변수로만 관리 (절대 yaml/코드에 하드코딩 금지)
 - **로깅**: 모든 MCP tool 호출 및 쿼리 실행 시간을 로깅
+- **테스트 결과 파일 명명**: `docs/test_results/` 하위 신규 생성 파일은 모두 `YYYYMMDD_HHMMSS_<name>.{md,log}` 형식 (timestamp 접두). 예: `20260526_161927_maria_mcp_auth_e2e.md`. 스크립트·스킬에서 파일 생성 시 이 순서를 반드시 지킬 것 (name 먼저 오는 형식 금지).
 
 ---
 
@@ -172,11 +177,11 @@ aidc_llm_agent/
 - Transport: HTTP, 기본 포트 `8001`
 - 환경변수: `.env.example` 참고 (`MARIA_*`, `MCP_HOST/PORT`, `MCP_API_KEY`, `LOG_LEVEL`)
 - **인증**: `X-API-Key` 헤더 검증 (Starlette 미들웨어) — 구현 완료
-- 노출 tool 15개:
-  - **기본 5개**: `get_device_info`, `get_alarm_detail`, `get_active_alarms`, `get_alarms_by_time`, `get_device_alarms`
-  - **RCA 확장 10개** (spec §10.1): `list_nearby_devices`, `list_devices_by_type`, `list_devices_by_ups`, `get_alarm_history`, `get_active_alarm_summary`, `get_nearby_alarms`, `get_checkpoint_alarms`, `search_devices`, `get_alarm_history_by_policy`, `get_active_alarms_for_devices`
+- 노출 tool 16개:
+  - **기본 5개**: `get_device_info`, `get_alarm_info`, `get_active_alarms`, `get_alarms_by_time`, `get_device_alarms`
+  - **RCA 확장 11개** (spec §10.1): `list_nearby_devices`, `list_devices_by_type`, `list_devices_by_ups`, `get_alarm_history`, `get_active_alarm_summary`, `get_nearby_alarms`, `get_checkpoint_alarms`, `search_devices`, `get_alarm_history_by_policy`, `get_active_alarms_for_devices`, `get_device_alarms_by_time`
 - 진단: `uv run maria-mcp-diag` (DB 접속 + 샘플 ID + 카운트)
-- 통합 테스트: `uv run pytest tests/` (실 DB 접속 — 기본 8개 + RCA 24개 케이스)
+- 통합 테스트: `uv run pytest tests/` (실 DB 접속 — 기본 10개 + RCA 25개 케이스)
 - **미포함 (TBD)**: 분석결과 저장(`llm_analysis_result`), Notification 관련 조회/저장.
 
 ### mcp_client (구현 완료)
@@ -201,7 +206,9 @@ aidc_llm_agent/
 - 설계 변경 시 반드시 spec 업데이트 후 코드 수정
 - 코드가 spec보다 앞서간 경우 phase 완료 시 spec 동기화
 - CLAUDE.md의 패턴/규칙 변경은 사람 승인 후에만 수정
-- 불일치 발견 시 임의로 맞추지 말고 [CONFLICT] 주석으로 표시 후 보고# CLAUDE.md
+- 불일치 발견 시 임의로 맞추지 말고 [CONFLICT] 주석으로 표시 후 보고
+
+# CLAUDE.md
 
 Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
 

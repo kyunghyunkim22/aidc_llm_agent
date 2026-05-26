@@ -289,6 +289,29 @@ LIMIT %s
 """
 
 
+SELECT_DEVICE_ALARMS_BY_TIME = f"""
+SELECT
+{_ALARM_SUMMARY_COLS}
+FROM fm_fault_alarm_cur
+WHERE data_center_id = %s
+  AND device_id      = %s
+  AND log_date >= %s
+  AND log_date <  %s
+  AND (%s IS NULL OR alarm_severity_name = %s)
+UNION ALL
+SELECT
+{_ALARM_SUMMARY_COLS}
+FROM fm_fault_alarm_his
+WHERE data_center_id = %s
+  AND device_id      = %s
+  AND log_date >= %s
+  AND log_date <  %s
+  AND (%s IS NULL OR alarm_severity_name = %s)
+ORDER BY log_date DESC
+LIMIT %s
+"""
+
+
 def build_active_alarms_for_devices_query(device_ids: list[int]) -> tuple[str, tuple]:
     """device_ids 개수만큼 IN 플레이스홀더를 동적으로 생성한다.
 

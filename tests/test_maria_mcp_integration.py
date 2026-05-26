@@ -29,8 +29,8 @@ async def test_get_device_info_not_found(_pool: Any) -> None:
     assert result is None
 
 
-async def test_get_alarm_detail(sample_alarm: dict[str, Any]) -> None:
-    result = await tools.get_alarm_detail(
+async def test_get_alarm_info(sample_alarm: dict[str, Any]) -> None:
+    result = await tools.get_alarm_info(
         sample_alarm["data_center_id"], sample_alarm["id"]
     )
     assert result is not None
@@ -38,9 +38,9 @@ async def test_get_alarm_detail(sample_alarm: dict[str, Any]) -> None:
     assert result.alarm_id == sample_alarm["id"]
 
 
-async def test_get_alarm_detail_not_found(sample_alarm: dict[str, Any]) -> None:
+async def test_get_alarm_info_not_found(sample_alarm: dict[str, Any]) -> None:
     # sample_alarm 은 _pool 에 이미 의존하므로 추가 선언 불필요
-    result = await tools.get_alarm_detail(
+    result = await tools.get_alarm_info(
         sample_alarm["data_center_id"], alarm_id=-1
     )
     assert result is None
@@ -127,3 +127,75 @@ async def test_get_device_alarms(sample_alarm: dict[str, Any]) -> None:
     for a in result:
         assert isinstance(a, AlarmSummary)
         assert a.device_id == sample_alarm["device_id"]
+
+
+import os  # noqa: E402
+
+
+class TestGetDeviceAlarmsByTime:
+    pytestmark = pytest.mark.skipif(
+        not os.getenv("MARIA_HOST"), reason="실 DB 환경 없음"
+    )
+
+    async def test_normal_returns_results(self, sample_alarm: dict[str, Any]) -> None:
+        """device_id + 알람 있는 기간 → 결과 반환, device_id 일치 검증."""
+        if sample_alarm["device_id"] is None:
+            pytest.skip("샘플 알람의 device_id가 NULL")
+        end = datetime.now()
+        start = end - timedelta(days=90)
+        result = await tools.get_device_alarms_by_time(
+            sample_alarm["data_center_id"],
+            sample_alarm["device_id"],
+            start_time=start,
+            end_time=end,
+        )
+        assert isinstance(result, list)
+        for a in result:
+            assert isinstance(a, AlarmSummary)
+            assert a.device_id == sample_alarm["device_id"]
+
+    async def test_severity_filter(self, sample_alarm: dict[str, Any]) -> None:
+        """severity 필터 적용 시 해당 severity 알람만 반환."""
+        if sample_alarm["device_id"] is None:
+            pytest.skip("샘플 알람의 device_id가 NULL")
+        end = datetime.now()
+        start = end - timedelta(days=90)
+        result = await tools.get_device_alarms_by_time(
+            sample_alarm["data_center_id"],
+            sample_alarm["device_id"],
+            start_time=start,
+            end_time=end,
+            severity="__nonexistent_severity__",
+        )
+        assert result == []
+
+    async def test_no_alarms_in_period(self, sample_alarm: dict[str, Any]) -> None:
+        """알람 없는 기간 → 빈 리스트 반환 (에러 아님)."""
+        if sample_alarm["device_id"] is None:
+            pytest.skip("샘플 알람의 device_id가 NULL")
+        # 미래 구간은 알람이 없음
+        start = datetime(2099, 1, 1)
+        end = datetime(2099, 1, 2)
+        result = await tools.get_device_alarms_by_time(
+            sample_alarm["data_center_id"],
+            sample_alarm["device_id"],
+            start_time=start,
+            end_time=end,
+        )
+        assert result == []
+
+    async def test_limit_clamp(self, sample_alarm: dict[str, Any]) -> None:
+        """limit=100 → _LIMIT_MAX(15)로 clamp, 결과 15건 이하."""
+        if sample_alarm["device_id"] is None:
+            pytest.skip("샘플 알람의 device_id가 NULL")
+        end = datetime.now()
+        start = end - timedelta(days=365)
+        result = await tools.get_device_alarms_by_time(
+            sample_alarm["data_center_id"],
+            sample_alarm["device_id"],
+            start_time=start,
+            end_time=end,
+            limit=100,
+        )
+        assert isinstance(result, list)
+        assert len(result) <= 15

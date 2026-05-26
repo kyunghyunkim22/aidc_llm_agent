@@ -24,6 +24,9 @@ class _ApiKeyMiddleware(BaseHTTPMiddleware):
     FastMCP 3.x 주입 방식:
         mcp.run(..., middleware=[Middleware(_ApiKeyMiddleware)])
     starlette.middleware.Middleware 는 ASGI 앱 래핑 시 클래스와 kwargs 를 함께 전달한다.
+
+    전체 흐름
+     Middleware → FastMCP ASGI → tool 함수 -> 결과 반환
     """
 
     async def dispatch(self, request: Request, call_next: Callable) -> JSONResponse:
@@ -58,9 +61,9 @@ async def get_device_info(data_center_id: int, device_id: int) -> DeviceInfo | N
 
 
 @mcp.tool
-async def get_alarm_detail(data_center_id: int, alarm_id: int) -> AlarmDetail | None:
+async def get_alarm_info(data_center_id: int, alarm_id: int) -> AlarmDetail | None:
     """알람 단건 상세 (fm_fault_alarm_cur)."""
-    return await tools.get_alarm_detail(data_center_id, alarm_id)
+    return await tools.get_alarm_info(data_center_id, alarm_id)
 
 
 @mcp.tool
@@ -189,6 +192,22 @@ async def get_active_alarms_for_devices(
     """여러 장비의 활성 알람을 한 번에 조회 — list_nearby_devices 결과 후속 N+1 호출 방지.
     device_ids 최대 50개. 빈 리스트 입력 시 빈 리스트 반환. limit 최대 200."""
     return await tools.get_active_alarms_for_devices(data_center_id, device_ids, limit)
+
+
+@mcp.tool
+async def get_device_alarms_by_time(
+    data_center_id: int,
+    device_id: int,
+    start_time: datetime,
+    end_time: datetime,
+    severity: str | None = None,
+    limit: int = 15,
+) -> list[AlarmSummary]:
+    """특정 장비 + 절대 datetime 범위 알람 조회 (cur 활성 + his 이력 UNION).
+    get_device_alarms(최근 N시간)와 달리 start_time/end_time으로 절대 기간을 지정한다. limit 최대 15."""
+    return await tools.get_device_alarms_by_time(
+        data_center_id, device_id, start_time, end_time, severity, limit
+    )
 
 
 @mcp.tool

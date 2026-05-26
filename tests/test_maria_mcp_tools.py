@@ -4,7 +4,7 @@
 각 tool 함수의 로직만 독립적으로 검증한다.
 
 커버 범위:
-- 기본 5개 tool: get_device_info, get_alarm_detail, get_active_alarms,
+- 기본 5개 tool: get_device_info, get_alarm_info, get_active_alarms,
                  get_alarms_by_time, get_device_alarms
 - RCA 확장 7개 tool: list_nearby_devices, list_devices_by_type, list_devices_by_ups,
                      get_alarm_history, get_active_alarm_summary,
@@ -162,7 +162,7 @@ class TestGetDeviceInfo:
 
 
 # ---------------------------------------------------------------------------
-# get_alarm_detail
+# get_alarm_info
 # ---------------------------------------------------------------------------
 
 class TestGetAlarmDetail:
@@ -170,7 +170,7 @@ class TestGetAlarmDetail:
         """정상 케이스: AlarmDetail 객체를 반환해야 한다."""
         row = _make_alarm_detail_row()
         with patch("maria_mcp.tools.db.fetch_one", new=AsyncMock(return_value=row)):
-            result = await tools.get_alarm_detail(data_center_id=1, alarm_id=100)
+            result = await tools.get_alarm_info(data_center_id=1, alarm_id=100)
 
         assert isinstance(result, AlarmDetail), "반환 타입은 AlarmDetail 여야 한다"
         assert result.alarm_id == 100
@@ -179,7 +179,7 @@ class TestGetAlarmDetail:
     async def test_empty_result_returns_none(self) -> None:
         """결과 없을 때: None을 반환해야 한다."""
         with patch("maria_mcp.tools.db.fetch_one", new=AsyncMock(return_value=None)):
-            result = await tools.get_alarm_detail(data_center_id=1, alarm_id=9999)
+            result = await tools.get_alarm_info(data_center_id=1, alarm_id=9999)
 
         assert result is None
 
@@ -190,7 +190,7 @@ class TestGetAlarmDetail:
             new=AsyncMock(side_effect=RuntimeError("connection lost")),
         ):
             with pytest.raises(RuntimeError):
-                await tools.get_alarm_detail(data_center_id=1, alarm_id=100)
+                await tools.get_alarm_info(data_center_id=1, alarm_id=100)
 
     async def test_timeout_propagates(self) -> None:
         """Timeout: asyncio.TimeoutError가 전파되어야 한다."""
@@ -199,13 +199,13 @@ class TestGetAlarmDetail:
             new=AsyncMock(side_effect=asyncio.TimeoutError()),
         ):
             with pytest.raises(asyncio.TimeoutError):
-                await tools.get_alarm_detail(data_center_id=1, alarm_id=100)
+                await tools.get_alarm_info(data_center_id=1, alarm_id=100)
 
     async def test_alarm_detail_has_extra_fields(self) -> None:
         """AlarmDetail은 AlarmSummary에 없는 checkpoint_id 등 추가 필드를 가져야 한다."""
         row = _make_alarm_detail_row(checkpoint_id=7, acknowledged_message="확인됨")
         with patch("maria_mcp.tools.db.fetch_one", new=AsyncMock(return_value=row)):
-            result = await tools.get_alarm_detail(data_center_id=1, alarm_id=100)
+            result = await tools.get_alarm_info(data_center_id=1, alarm_id=100)
 
         assert result is not None
         assert result.checkpoint_id == 7
@@ -1471,3 +1471,105 @@ class TestBuildActiveAlarmsForDevicesQuery:
 
         assert len(params) == 50
         assert sql.count("%s") == 52  # data_center_id(1) + device_ids(50) + limit(1)
+
+
+# ---------------------------------------------------------------------------
+# get_device_alarms_by_time
+# ---------------------------------------------------------------------------
+
+class TestGetDeviceAlarmsByTime:
+    _START = datetime(2026, 1, 1, 0, 0, 0)
+    _END = datetime(2026, 5, 1, 0, 0, 0)
+
+    async def test_success_returns_alarm_summary_list(self) -> None:
+        """정상 케이스: AlarmSummary 리스트를 반환해야 한다."""
+        rows = [_make_alarm_summary_row(device_id=10), _make_alarm_summary_row(device_id=10)]
+        with patch("maria_mcp.tools.db.fetch_all", new=AsyncMock(return_value=rows)):
+            result = await tools.get_device_alarms_by_time(
+                data_center_id=1,
+                device_id=10,
+                start_time=self._START,
+                end_time=self._END,
+            )
+
+        assert len(result) == 2
+        assert all(isinstance(a, AlarmSummary) for a in result)
+        assert all(a.device_id == 10 for a in result)
+
+    async def test_severity_filter_passed_correctly(self) -> None:
+        """severity 파라미터: (%s IS NULL OR severity = %s) 패턴으로 cur·his 각 2개, 총 4개 전달되어야 한다."""
+        mock_fetch = AsyncMock(return_value=[])
+        with patch("maria_mcp.tools.db.fetch_all", new=mock_fetch):
+            await tools.get_device_alarms_by_time(
+                data_center_id=1,
+                device_id=10,
+                start_time=self._START,
+                end_time=self._END,
+                severity="Critical",
+            )
+
+        _, _, params = mock_fetch.call_args[0]
+        assert params.count("Critical") == 4, (
+            "(%s IS NULL OR alarm_severity_name = %s) 패턴으로 cur·his 각 2개씩, 총 4개여야 한다"
+        )
+
+    async def test_limit_clamped_to_max(self) -> None:
+        """limit 초과: _LIMIT_MAX(15)로 clamp되어 params 마지막 값이 15여야 한다."""
+        mock_fetch = AsyncMock(return_value=[])
+        with patch("maria_mcp.tools.db.fetch_all", new=mock_fetch):
+            await tools.get_device_alarms_by_time(
+                data_center_id=1,
+                device_id=10,
+                start_time=self._START,
+                end_time=self._END,
+                limit=9999,
+            )
+
+        _, _, params = mock_fetch.call_args[0]
+        assert params[-1] == 15, "limit은 _LIMIT_MAX(15)로 clamp되어야 한다"
+
+    async def test_empty_result_returns_empty_list(self) -> None:
+        """빈 결과: DB가 빈 리스트를 반환하면 빈 리스트를 반환해야 한다."""
+        with patch("maria_mcp.tools.db.fetch_all", new=AsyncMock(return_value=[])):
+            result = await tools.get_device_alarms_by_time(
+                data_center_id=1,
+                device_id=10,
+                start_time=self._START,
+                end_time=self._END,
+            )
+
+        assert result == []
+
+    async def test_db_error_propagates(self) -> None:
+        """DB 오류: RuntimeError가 그대로 전파되어야 한다."""
+        with patch(
+            "maria_mcp.tools.db.fetch_all",
+            new=AsyncMock(side_effect=RuntimeError("DB error")),
+        ):
+            with pytest.raises(RuntimeError, match="DB error"):
+                await tools.get_device_alarms_by_time(
+                    data_center_id=1,
+                    device_id=10,
+                    start_time=self._START,
+                    end_time=self._END,
+                )
+
+    async def test_params_structure_union(self) -> None:
+        """파라미터 구조: cur + his UNION이므로 data_center_id·device_id·start·end·severity가 각 2벌씩 전달되어야 한다."""
+        mock_fetch = AsyncMock(return_value=[])
+        with patch("maria_mcp.tools.db.fetch_all", new=mock_fetch):
+            await tools.get_device_alarms_by_time(
+                data_center_id=1,
+                device_id=10,
+                start_time=self._START,
+                end_time=self._END,
+                severity=None,
+                limit=5,
+            )
+
+        _, _, params = mock_fetch.call_args[0]
+        # 구조: (dc, dev, start, end, None, None,  dc, dev, start, end, None, None,  limit)
+        assert len(params) == 13, f"UNION 쿼리 파라미터는 총 13개여야 한다, 실제: {len(params)}"
+        assert params[0] == params[6] == 1,  "data_center_id가 cur·his 양쪽에 전달되어야 한다"
+        assert params[1] == params[7] == 10, "device_id가 cur·his 양쪽에 전달되어야 한다"
+        assert params[-1] == 5, "limit은 마지막 파라미터여야 한다"
