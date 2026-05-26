@@ -1,0 +1,253 @@
+# 테스트 결과 — 2026-05-22 15:55:52
+
+- 전체: 11건 / PASS: 8건 / FAIL: 3건
+- LLM: http://1.234.33.212:8000/v1 / /models/gemma-4-E4B-it-W4A16
+
+---
+
+## search_devices
+
+### [PASS] Q1: 이름에 "CH-E" 들어가는 장비 찾아줘
+- 호출 tool: search_devices
+- 소요시간: 6.2s
+- 토큰: input=6710 output=140 total=6850
+- 예상 결과: **14건** (전체 14건) — CH-EAST(B)-5/6, VTS_CH-East(B) 등 Switchboard 계열
+- tool[1] search_devices args={'data_center_id': 1, 'device_nm': 'CH-E'}
+  → output_len=N/A, preview: [{'type': 'text', 'text': '[{"device_id":17377,"device_name":"CH-EAST(B)-5","device_category_name":"Electric Power","device_type_name":"Switchboard","location":"B4F > B4F 기계실B > A1","enable_monitor":1,"manufacturer_name":null,"connected_ups":null},{"device_id":17378,"device_name":"CH-EAST(B)-6","device_category_name":"Electric Power","device_type_name":"Switchboard","location":"B4F > B4F 기계실B > A1","enable_monitor":1,"manufacturer_name":null,"connected_ups":null},{"device_id":16995,"device_name"
+- LLM 답변:
+```
+총 15건의 장비를 찾았습니다. 첫 번째 장비의 상세 정보는 다음과 같습니다.
+
+**장비 정보:**
+*   **device_id:** 17377
+*   **device_name:** CH-EAST(B)-5
+*   **device_category_name:** Electric Power
+*   **device_type_name:** Switchboard
+*   **location:** B4F > B4F 기계실B > A1
+*   **manufacturer_name:** N/A
+```
+
+### [FAIL] Q2: 위치에 "B3F" 포함된 Switchboard 장비 검색해줘
+- 호출 tool: search_devices
+- 소요시간: 1.4s
+- 토큰: input=2786 output=49 total=2835
+- 예상 결과: **15건 조회** (총 50건+) — LP-B2, LR-B2, LV 계열 분전반 다수
+- tool[1] search_devices args={'data_center_id': 1, 'device_category_name': 'Electric Power', 'device_location': 'B3F', 'device_type_name': 'Switchboard'}
+  → output_len=0, preview: 
+- 오류: 1 validation error for call[search_devices]
+device_location
+  Unexpected keyword argument [type=unexpected_keyword_argument, input_value='B3F', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/unexpected_keyword_argument
+
+### [PASS] Q3: 카테고리 "HVAC"이고 타입이 "CRAC"인 장비 목록 뽑아줘
+- 호출 tool: list_devices_by_type
+- 소요시간: 4.1s
+- 토큰: input=6383 output=130 total=6513
+- 예상 결과: **15건 조회** (총 50건+) — CRAC-1F~9F 계열 (위치 없는 가상장비 1건 포함)
+- tool[1] list_devices_by_type args={'data_center_id': 1, 'device_category_name': 'HVAC', 'device_type_name': 'CRAC'}
+  → output_len=N/A, preview: [{'type': 'text', 'text': '[{"device_id":32946,"device_name":"10층 동관 습도","device_category_name":"HVAC","device_type_name":"CRAH","location":null,"enable_monitor":1},{"device_id":32954,"device_name":"10층 동관 온도","device_category_name":"HVAC","device_type_name":"CRAH","location":null,"enable_monitor":1},{"device_id":32953,"device_name":"10층 서관 습도","device_category_name":"HVAC","device_type_name":"CRAH","location":null,"enable_monitor":1},{"device_id":32960,"device_name":"10층 서관 온도","device_category
+- LLM 답변:
+```
+총 15건의 장비가 있습니다. 첫 번째 장비의 상세 정보는 다음과 같습니다:
+*   device_id: 32946
+*   device_name: 10층 동관 습도
+*   device_category_name: HVAC
+*   device_type_name: CRAC
+*   location: null
+*   enable_monitor: 1
+```
+
+### [PASS] Q4: 이름에 "LV3" 포함되고 카테고리가 "Electric Power"인 장비 알려줘
+- 호출 tool: search_devices
+- 소요시간: 4.9s
+- 토큰: input=6747 output=146 total=6893
+- 예상 결과: **15건 조회** (총 50건+) — LV3 계열 분전반 다수
+- tool[1] search_devices args={'data_center_id': 1, 'device_category_name': 'Electric Power', 'device_nm': 'LV3'}
+  → output_len=N/A, preview: [{'type': 'text', 'text': '[{"device_id":609,"device_name":"LV3-2-1 APR","device_category_name":"Electric Power","device_type_name":"Switchboard","location":"B3F > B3F EPS/TPS > A1","enable_monitor":1,"manufacturer_name":null,"connected_ups":null},{"device_id":610,"device_name":"LV3-2-2 SVC","device_category_name":"Electric Power","device_type_name":"Switchboard","location":"B3F > B3F EPS/TPS > A1","enable_monitor":1,"manufacturer_name":null,"connected_ups":null},{"device_id":657,"device_name":"
+- LLM 답변:
+```
+총 15건의 장비가 검색되었습니다. 첫 번째 장비의 상세 정보는 다음과 같습니다.
+
+**장비 정보:**
+*   **device_id:** 609
+*   **device_name:** LV3-2-1 APR
+*   **device_category_name:** Electric Power
+*   **device_type_name:** Switchboard
+*   **location:** B3F > B3F EPS/TPS > A1
+*   **manufacturer_name:** null
+```
+
+### [PASS] Q5: "6F" 위치에 있는 IT 장비 찾아줘
+- 호출 tool: search_devices
+- 소요시간: 4.8s
+- 토큰: input=6786 output=140 total=6926
+- 예상 결과: **15건 조회** (총 50건+) — 6FW/6FE 서버실 Rack 장비들
+- tool[1] search_devices args={'data_center_id': 1, 'device_category_name': 'IT', 'location': '6F'}
+  → output_len=N/A, preview: [{'type': 'text', 'text': '[{"device_id":1207,"device_name":"출입통제 시스템-6F","device_category_name":"Security","device_type_name":"Access Controller","location":"06F > 6F 운영설비 > D3","enable_monitor":1,"manufacturer_name":null,"connected_ups":null},{"device_id":10494,"device_name":"6FW-06-01","device_category_name":"IT","device_type_name":"Rack","location":"06F > 6층 서버실 A (서측-W) > A1","enable_monitor":1,"manufacturer_name":null,"connected_ups":null},{"device_id":33116,"device_name":"6FW-09-01","devi
+- LLM 답변:
+```
+총 16건의 IT 장비가 발견되었습니다. 첫 번째 장비의 상세 정보는 다음과 같습니다:
+*   **device_id**: 1207
+*   **device_name**: 출입통제 시스템-6F
+*   **device_category_name**: Security
+*   **device_type_name**: Access Controller
+*   **location**: 06F > 6F 운영설비 > D3
+*   **manufacturer_name**: null
+```
+
+### [PASS] Q6: 이름에 "HV2" 포함되는 장비 알려줘
+- 호출 tool: search_devices
+- 소요시간: 4.6s
+- 토큰: input=6720 output=137 total=6857
+- 예상 결과: **15건 조회** (총 50건+) — HV2 SP1/SP2, HV2 A-M2 등 Switchboard(6F UPS실)
+- tool[1] search_devices args={'data_center_id': 1, 'device_nm': 'HV2'}
+  → output_len=N/A, preview: [{'type': 'text', 'text': '[{"device_id":16362,"device_name":"HV2 SP1","device_category_name":"Electric Power","device_type_name":"Switchboard","location":"06F > 6층 UPS실 A > A3","enable_monitor":1,"manufacturer_name":null,"connected_ups":null},{"device_id":16363,"device_name":"HV2 SP2","device_category_name":"Electric Power","device_type_name":"Switchboard","location":"06F > 6층 UPS실 A > A3","enable_monitor":1,"manufacturer_name":null,"connected_ups":null},{"device_id":16375,"device_name":"HV2 A-
+- LLM 답변:
+```
+총 16건의 장비가 검색되었습니다. 첫 번째 장비의 상세 정보는 다음과 같습니다.
+
+**장비 정보:**
+*   **device_id:** 16362
+*   **device_name:** HV2 SP1
+*   **device_category_name:** Electric Power
+*   **device_type_name:** Switchboard
+*   **location:** 06F > 6층 UPS실 A > A3
+*   **manufacturer_name:** N/A
+```
+
+## list_devices_by_type
+
+### [PASS] Q1: 카테고리 "HVAC" 장비 전체 목록 보여줘
+- 호출 tool: list_devices_by_type
+- 소요시간: 4.2s
+- 토큰: input=6356 output=133 total=6489
+- 예상 결과: **15건 조회** (총 50건+) — CRAC, 냉각탑, 냉동기 등
+- tool[1] list_devices_by_type args={'data_center_id': 1, 'device_category_name': 'HVAC'}
+  → output_len=N/A, preview: [{'type': 'text', 'text': '[{"device_id":32946,"device_name":"10층 동관 습도","device_category_name":"HVAC","device_type_name":"CRAH","location":null,"enable_monitor":1},{"device_id":32954,"device_name":"10층 동관 온도","device_category_name":"HVAC","device_type_name":"CRAH","location":null,"enable_monitor":1},{"device_id":32953,"device_name":"10층 서관 습도","device_category_name":"HVAC","device_type_name":"CRAH","location":null,"enable_monitor":1},{"device_id":32960,"device_name":"10층 서관 온도","device_category
+- LLM 답변:
+```
+총 15건의 "HVAC" 카테고리 장비가 있습니다. 첫 번째 장비의 상세 정보는 다음과 같습니다:
+*   **device_id**: 32946
+*   **device_name**: 10층 동관 습도
+*   **device_category_name**: HVAC
+*   **device_type_name**: CRAH
+*   **location**: null
+*   **enable_monitor**: 1
+```
+
+### [FAIL] Q2: 장비 유형이 "Rack"인 것들 다 뽑아줘
+- 호출 tool: list_devices_by_type
+- 소요시간: 1.0s
+- 토큰: input=2783 output=33 total=2816
+- 예상 결과: **15건 조회** (총 50건+) — IT/Rack (서버실 랙들)
+- tool[1] list_devices_by_type args={'device_category_name': 'IT', 'device_type_name': 'Rack'}
+  → output_len=0, preview: 
+- 오류: 1 validation error for call[list_devices_by_type]
+data_center_id
+  Missing required argument [type=missing_argument, input_value={'device_category_name': ...vice_type_name': 'Rack'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.13/v/missing_argument
+
+### [PASS] Q3: 카테고리 "IT" 장비 목록 알려줘
+- 호출 tool: list_devices_by_type
+- 소요시간: 4.1s
+- 토큰: input=6587 output=122 total=6709
+- 예상 결과: **15건 조회** (총 50건+) — Rack 장비들
+- tool[1] list_devices_by_type args={'data_center_id': 1, 'device_category_name': 'IT'}
+  → output_len=N/A, preview: [{'type': 'text', 'text': '[{"device_id":21233,"device_name":"전력사용량","device_category_name":"IT","device_type_name":"Rack","location":null,"enable_monitor":1},{"device_id":19254,"device_name":"3FW-03-01","device_category_name":"IT","device_type_name":"Rack","location":"03F > 3층 서버실 A (서측-W) > A1","enable_monitor":1},{"device_id":19255,"device_name":"3FW-03-02","device_category_name":"IT","device_type_name":"Rack","location":"03F > 3층 서버실 A (서측-W) > A1","enable_monitor":1},{"device_id":19256,"dev
+- LLM 답변:
+```
+총 15건의 IT 카테고리 장비가 있습니다. 첫 번째 장비 정보는 다음과 같습니다:
+*   **device_id**: 21233
+*   **device_name**: 전력사용량
+*   **device_category_name**: IT
+*   **device_type_name**: Rack
+*   **location**: null
+*   **enable_monitor**: 1
+```
+
+### [PASS] Q4: 장비 타입 "CRAC"인 장비 최대 10개 조회해줘
+- 호출 tool: list_devices_by_type
+- 소요시간: 22.1s
+- 토큰: input=6280 output=858 total=7138
+- 예상 결과: **15건 조회** (총 50건+) — CRAC-1F~9F 계열
+- tool[1] list_devices_by_type args={'data_center_id': 1, 'device_type_name': 'CRAC', 'limit': 10}
+  → output_len=N/A, preview: [{'type': 'text', 'text': '[{"device_id":21232,"device_name":"밸브개도율에 따른 유량값비교(3F B-101-13)","device_category_name":"HVAC","device_type_name":"CRAC","location":null,"enable_monitor":1},{"device_id":1563,"device_name":"CRAC-1F-112-1","device_category_name":"HVAC","device_type_name":"CRAC","location":"01F > 1F 운영설비 > A1","enable_monitor":1},{"device_id":1564,"device_name":"CRAC-1F-112-2","device_category_name":"HVAC","device_type_name":"CRAC","location":"01F > 1F 운영설비 > A1","enable_monitor":1},{"de
+- LLM 답변:
+```
+총 10개의 장비가 조회되었습니다. 각 장비의 상세 정보는 다음과 같습니다.
+
+**장비 정보 (10건)**
+
+1. **Device ID:** 21232
+    * **Device Name:** 밸브개도율에 따른 유량값비교(3F B-101-13)
+    * **Device Category Name:** HVAC
+    * **Device Type Name:** CRAC
+    * **Location:** null
+    * **Enable Monitor:** 1
+2. **Device ID:** 1563
+    * **Device Name:** CRAC-1F-112-1
+    * **Device Category Name:** HVAC
+    * **Device Type Name:** CRAC
+    * **Location:** 01F > 1F 운영설비 > A1
+    * **Enable Monitor:** 1
+3. **Device ID:** 1564
+    * **Device Name:** CRAC-1F-112-2
+    * **Device Category Name:** HVAC
+    * **Device Type Name:** CRAC
+    * **Location:** 01F > 1F 운영설비 > A1
+    * **Enable Monitor:** 1
+4. **Device ID:** 1565
+    * **Device Name:** CRAC-1F-113-1
+    * **Device Category Name:** HVAC
+    * **Device Type Name:** CRAC
+    * **Location:** 01F > 1F 운영설비 > A1
+    * **Enable Monitor:** 1
+5. **Device ID:** 1566
+    * **Device Name:** CRAC-1F-113-2
+    * **Device Category Name:** HVAC
+    * **Device Type Name:** CRAC
+    * **Location:** 01F > 1F 운영설비 > A1
+    * **Enable Monitor:** 1
+6. **Device ID:** 1567
+    * **Device Name:** CRAC-1F-114-1
+    * **Device Category Name:** HVAC
+    * **Device Type Name:** CRAC
+    * **Location:** 01F > 1F 운영설비 > A1
+    * **Enable Monitor:** 1
+7. **Device ID:** 1568
+    * **Device Name:** CRAC-1F-114-2
+    * **Device Category Name:** HVAC
+    * **Device Type Name:** CRAC
+    * **Location:** 01F > 1F 운영설비 > A1
+    * **Enable Monitor:** 1
+8. **Device ID:** 1545
+    * **Device Name:** CRAC-3F-A-111-3
+    * **Device Category Name:** HVAC
+    * **Device Type Name:** CRAC
+    * **Location:** 03F > 3층 UPS실 A > A1
+    * **Enable Monitor:** 1
+9. **Device ID:** 1546
+    * **Device Name:** CRAC-3F-A-111-4
+    * **Device Category Name:** HVAC
+    * **Device Type Name:** CRAC
+    * **Location:** 03F > 3층 UPS실 A > A2
+    * **Enable Monitor:** 1
+10. **Device ID:** 1543
+    * **Device Name:** CRAC-3F-A-111-1
+    * **Device Category Name:** HVAC
+    * **Device Type Name:** CRAC
+    * **Location:** 03F > 3층 UPS실 B > A1
+    * **Enable Monitor:** 1
+```
+
+### [FAIL] Q5: 카테고리는 "Electric Power", 타입은 "Switchboard"인 장비 목록 보여줘
+- 호출 tool: list_devices_by_type
+- 소요시간: 1.0s
+- 토큰: input=2789 output=35 total=2824
+- 예상 결과: **15건 조회** (총 50건+) — LV, LP 계열 분전반들
+- tool[1] list_devices_by_type args={'device_category_name': 'Electric Power', 'device_type_name': 'Switchboard'}
+  → output_len=0, preview: 
+- 오류: 1 validation error for call[list_devices_by_type]
+data_center_id
+  Missing required argument [type=missing_argument, input_value={'device_category_name': ...pe_name': 'Switchboard'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.13/v/missing_argument

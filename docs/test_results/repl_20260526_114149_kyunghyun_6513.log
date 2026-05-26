@@ -1,0 +1,153 @@
+2026-05-26 11:41:49,130 | init failed
+  + Exception Group Traceback (most recent call last):
+  |   File "/Users/kyunghyun/workspace/aidc_llm_agent/src/test_harness/repl.py", line 118, in run_repl
+  |     agent, tools = await build_agent()
+  |                    ^^^^^^^^^^^^^^^^^^^
+  |   File "/Users/kyunghyun/workspace/aidc_llm_agent/src/test_harness/agent.py", line 18, in build_agent
+  |     tools = await client.get_tools()
+  |             ^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "/Users/kyunghyun/workspace/aidc_llm_agent/src/mcp_client/client.py", line 36, in get_tools
+  |     self._tools_cache = await self._client.get_tools()
+  |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/langchain_mcp_adapters/client.py", line 197, in get_tools
+  |     tools_list = await asyncio.gather(*load_mcp_tool_tasks)
+  |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/langchain_mcp_adapters/tools.py", line 478, in load_mcp_tools
+  |     async with create_session(
+  |                ~~~~~~~~~~~~~~^
+  |         connection, mcp_callbacks=mcp_callbacks
+  |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |     ) as tool_session:
+  |     ^
+  |   File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 235, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/langchain_mcp_adapters/sessions.py", line 448, in create_session
+  |     async with _create_streamable_http_session(**params) as session:
+  |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  |   File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 235, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/langchain_mcp_adapters/sessions.py", line 349, in _create_streamable_http_session
+  |     streamablehttp_client(
+  |     ~~~~~~~~~~~~~~~~~~~~~^
+  |         url,
+  |         ^^^^
+  |     ...<5 lines>...
+  |         **kwargs,
+  |         ^^^^^^^^^
+  |     ) as (read, write, _),
+  |     ^
+  |   File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 235, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/mcp/client/streamable_http.py", line 717, in streamablehttp_client
+  |     async with streamable_http_client(
+  |                ~~~~~~~~~~~~~~~~~~~~~~^
+  |         url,
+  |         ^^^^
+  |         http_client=client,
+  |         ^^^^^^^^^^^^^^^^^^^
+  |         terminate_on_close=terminate_on_close,
+  |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |     ) as streams:
+  |     ^
+  |   File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 235, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/mcp/client/streamable_http.py", line 647, in streamable_http_client
+  |     async with anyio.create_task_group() as tg:
+  |                ~~~~~~~~~~~~~~~~~~~~~~~^^
+  |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/anyio/_backends/_asyncio.py", line 799, in __aexit__
+  |     raise BaseExceptionGroup(
+  |         "unhandled errors in a TaskGroup", self._exceptions
+  |     ) from None
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    |     yield
+    |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 394, in handle_async_request
+    |     resp = await self._pool.handle_async_request(req)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 256, in handle_async_request
+    |     raise exc from None
+    |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 236, in handle_async_request
+    |     response = await connection.handle_async_request(
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |         pool_request.request
+    |         ^^^^^^^^^^^^^^^^^^^^
+    |     )
+    |     ^
+    |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/httpcore/_async/connection.py", line 101, in handle_async_request
+    |     raise exc
+    |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/httpcore/_async/connection.py", line 78, in handle_async_request
+    |     stream = await self._connect(request)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/httpcore/_async/connection.py", line 124, in _connect
+    |     stream = await self._network_backend.connect_tcp(**kwargs)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/httpcore/_backends/auto.py", line 31, in connect_tcp
+    |     return await self._backend.connect_tcp(
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<5 lines>...
+    |     )
+    |     ^
+    |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/httpcore/_backends/anyio.py", line 113, in connect_tcp
+    |     with map_exceptions(exc_map):
+    |          ~~~~~~~~~~~~~~^^^^^^^^^
+    |   File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 162, in __exit__
+    |     self.gen.throw(value)
+    |     ~~~~~~~~~~~~~~^^^^^^^
+    |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    |     raise to_exc(exc) from exc
+    | httpcore.ConnectError: All connection attempts failed
+    | 
+    | The above exception was the direct cause of the following exception:
+    | 
+    | Traceback (most recent call last):
+    |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/mcp/client/streamable_http.py", line 565, in handle_request_async
+    |     await self._handle_post_request(ctx)
+    |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/mcp/client/streamable_http.py", line 340, in _handle_post_request
+    |     async with ctx.client.stream(
+    |                ~~~~~~~~~~~~~~~~~^
+    |         "POST",
+    |         ^^^^^^^
+    |     ...<2 lines>...
+    |         headers=headers,
+    |         ^^^^^^^^^^^^^^^^
+    |     ) as response:
+    |     ^
+    |   File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 214, in __aenter__
+    |     return await anext(self.gen)
+    |            ^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1583, in stream
+    |     response = await self.send(
+    |                ^^^^^^^^^^^^^^^^
+    |     ...<4 lines>...
+    |     )
+    |     ^
+    |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1629, in send
+    |     response = await self._send_handling_auth(
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<4 lines>...
+    |     )
+    |     ^
+    |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1657, in _send_handling_auth
+    |     response = await self._send_handling_redirects(
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<3 lines>...
+    |     )
+    |     ^
+    |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1694, in _send_handling_redirects
+    |     response = await self._send_single_request(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1730, in _send_single_request
+    |     response = await transport.handle_async_request(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 393, in handle_async_request
+    |     with map_httpcore_exceptions():
+    |          ~~~~~~~~~~~~~~~~~~~~~~~^^
+    |   File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 162, in __exit__
+    |     self.gen.throw(value)
+    |     ~~~~~~~~~~~~~~^^^^^^^
+    |   File "/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    |     raise mapped_exc(message) from exc
+    | httpx.ConnectError: All connection attempts failed
+    +------------------------------------

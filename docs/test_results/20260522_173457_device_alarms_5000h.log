@@ -1,0 +1,64 @@
+/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/langgraph/checkpoint/serde/encrypted.py:5: LangChainPendingDeprecationWarning: The default value of `allowed_objects` will change in a future version. Pass an explicit value (e.g., allowed_objects='messages' or allowed_objects='core') to suppress this warning.
+  from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer
+/Users/kyunghyun/workspace/aidc_llm_agent/scripts/run_test_questions.py:377: LangGraphDeprecatedSinceV10: create_react_agent has been moved to `langchain.agents`. Please update your import to `from langchain.agents import create_agent`. Deprecated in LangGraph V1.0 to be removed in V2.0.
+  agent = create_react_agent(model=llm, tools=tools, prompt=SYSTEM_PROMPT)
+총 10개 질문
+LLM: http://1.234.33.212:8000/v1 / /models/gemma-4-E4B-it-W4A16
+------------------------------------------------------------
+[INFO] MCP tool 16개 로드 완료
+
+[get_device_alarms]
+  (1/10) 실행 중...  [FAIL] 장비 ID 2208에서 발생한 최근 5000시간 알람 이력 보여줘
+         tool: get_device_alarms_by_time / 1.5s
+         오류: 2 validation errors for call[get_device_alarms_by_time]
+start_time
+  Input should be a valid datetime or date, invalid date separator, expected `-` [type=datetime_from_date_parsing, input_value='5000 hours ago', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/datetime_from_date_parsing
+end_time
+  Input should be a valid datetime or date, input is too short [type=datetime_from_date_parsing, input_value='now', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/datetime_from_date_parsing
+  (2/10) 실행 중...  [FAIL] 장비 2276번의 최근 5000시간 알람 이력 알려줘
+         tool: get_device_alarms_by_time / 1.5s
+         오류: 2 validation errors for call[get_device_alarms_by_time]
+start_time
+  Input should be a valid datetime or date, invalid date separator, expected `-` [type=datetime_from_date_parsing, input_value='5000 hours ago', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/datetime_from_date_parsing
+end_time
+  Input should be a valid datetime or date, input is too short [type=datetime_from_date_parsing, input_value='now', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/datetime_from_date_parsing
+  (3/10) 실행 중...  [FAIL] 장비 ID 2273 최근 5000시간 알람 내역 뽑아줘
+         tool: get_device_alarms_by_time / 1.4s
+         오류: 2 validation errors for call[get_device_alarms_by_time]
+start_time
+  Input should be a valid datetime or date, invalid date separator, expected `-` [type=datetime_from_date_parsing, input_value='5000 hours ago', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/datetime_from_date_parsing
+end_time
+  Input should be a valid datetime or date, input is too short [type=datetime_from_date_parsing, input_value='now', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/datetime_from_date_parsing
+  (4/10) 실행 중...  [FAIL] 장비 2274에서 최근 5000시간 어떤 알람이 떴는지 봐줘
+         tool: get_device_alarms_by_time / 1.4s
+         오류: 2 validation errors for call[get_device_alarms_by_time]
+start_time
+  Input should be a valid datetime or date, invalid date separator, expected `-` [type=datetime_from_date_parsing, input_value='5000 hours ago', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/datetime_from_date_parsing
+end_time
+  Input should be a valid datetime or date, input is too short [type=datetime_from_date_parsing, input_value='now', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/datetime_from_date_parsing
+  (5/10) 실행 중...  [PASS] 장비 ID 33077의 최근 알람 최대 10건 가져와줘, 5000시간 기준으로
+         tool: get_device_alarms / 7.7s
+
+[get_device_alarms_by_time]
+  (6/10) 실행 중...  [PASS] 장비명이 CRAC-6F A-101-17인 대상 2026-02-02 00:00부터 2026-02-04 00:0
+         tool: search_devices, get_device_alarms_by_time / 14.1s
+  (7/10) 실행 중...  [PASS] 장비 ID 1499의 2026-01-01부터 2026-02-01까지 알람 이력 보여줘
+         tool: get_device_alarms_by_time / 10.4s
+  (8/10) 실행 중...  [PASS] 장비 2208번에서 2026-01-01 ~ 2026-02-01 기간에 발생한 알람 뽑아줘
+         tool: get_device_alarms_by_time / 8.6s
+  (9/10) 실행 중...  [PASS] 장비 ID 1499의 2026-02-03 ~ 2026-02-06 알람 조회해줘, Warning 등급만
+         tool: get_device_alarms_by_time / 9.4s
+  (10/10) 실행 중...  [PASS] 장비 2276번의 2026-02-01 00:00 ~ 2026-03-01 00:00 알람 내역 최대 10건 확
+         tool: get_device_alarms_by_time / 7.2s
+
+============================================================
+결과: 6/10 PASS
+저장: docs/test_results/20260522_173457_device_alarms_5000h.md

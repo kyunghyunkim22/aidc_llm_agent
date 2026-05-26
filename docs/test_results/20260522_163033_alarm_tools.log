@@ -1,0 +1,190 @@
+/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/langgraph/checkpoint/serde/encrypted.py:5: LangChainPendingDeprecationWarning: The default value of `allowed_objects` will change in a future version. Pass an explicit value (e.g., allowed_objects='messages' or allowed_objects='core') to suppress this warning.
+  from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer
+/Users/kyunghyun/workspace/aidc_llm_agent/scripts/run_test_questions.py:368: LangGraphDeprecatedSinceV10: create_react_agent has been moved to `langchain.agents`. Please update your import to `from langchain.agents import create_agent`. Deprecated in LangGraph V1.0 to be removed in V2.0.
+  agent = create_react_agent(model=llm, tools=tools, prompt=SYSTEM_PROMPT)
+총 55개 질문
+LLM: http://1.234.33.212:8000/v1 / /models/gemma-4-E4B-it-W4A16
+------------------------------------------------------------
+[INFO] MCP tool 16개 로드 완료
+
+[get_alarm_detail]
+  (1/55) 실행 중...  [FAIL] 알람 ID 5732176의 상세 내용 보여줘
+         tool: get_alarm_detail / 0.7s
+         오류: 1 validation error for call[get_alarm_detail]
+data_center_id
+  Missing required argument [type=missing_argument, input_value={'alarm_id': 5732176}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.13/v/missing_argument
+  (2/55) 실행 중...  [FAIL] 알람 번호 5732177이 뭔지 자세히 알고 싶어
+         tool: get_alarm_detail / 0.7s
+         오류: 1 validation error for call[get_alarm_detail]
+data_center_id
+  Missing required argument [type=missing_argument, input_value={'alarm_id': 5732177}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.13/v/missing_argument
+  (3/55) 실행 중...  [FAIL] 알람 ID 5732178 조회해줘, 언제 발생했고 심각도가 어떻게 되는지
+         tool: get_alarm_detail / 0.8s
+         오류: 1 validation error for call[get_alarm_detail]
+data_center_id
+  Missing required argument [type=missing_argument, input_value={'alarm_id': 5732178}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.13/v/missing_argument
+  (4/55) 실행 중...  [FAIL] 알람 ID 5732179의 원인 메시지 확인해줘
+         tool: get_alarm_detail / 0.7s
+         오류: 1 validation error for call[get_alarm_detail]
+data_center_id
+  Missing required argument [type=missing_argument, input_value={'alarm_id': 5732179}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.13/v/missing_argument
+  (5/55) 실행 중...  [PASS] 데이터센터 1에서 발생한 알람 ID 5797194 상세 정보 알려줘
+         tool: get_alarm_detail / 6.8s
+
+[get_active_alarms]
+  (6/55) 실행 중...  [PASS] 지금 활성화된 알람 목록 보여줘
+         tool: get_active_alarms / 8.3s
+  (7/55) 실행 중...  [PASS] 현재 Critical 등급 알람만 뽑아줘
+         tool: get_active_alarms / 6.5s
+  (8/55) 실행 중...  [PASS] 지금 Warning 등급 알람 최대 10개 보여줘
+         tool: get_active_alarms / 7.5s
+  (9/55) 실행 중...  [PASS] 현재 미처리 알람 전체 현황 알려줘
+         tool: get_active_alarm_summary / 3.2s
+  (10/55) 실행 중...  [PASS] 활성 알람 중 Fatal 등급인 것들 알려줘
+         tool: get_active_alarms / 10.5s
+
+[get_alarms_by_time]
+  (11/55) 실행 중...  [PASS] 2026-02-04 00:00부터 2026-02-05 00:00 사이에 발생한 알람 목록 보여줘
+         tool: get_alarms_by_time / 9.0s
+  (12/55) 실행 중...  [PASS] 2026-02-04 00:00 ~ 2026-02-04 12:00 사이 Warning 알람 알려줘
+         tool: get_alarms_by_time / 9.3s
+  (13/55) 실행 중...  [PASS] 2026-02-05 00:00부터 2026-02-06 00:00까지 발생한 알람 다 뽑아줘
+         tool: get_alarms_by_time / 7.6s
+  (14/55) 실행 중...  [PASS] 2026-01-29 전체 하루 동안 발생한 Warning 알람 보여줘
+         tool: get_alarms_by_time / 11.7s
+  (15/55) 실행 중...  [PASS] 2026-02-04 09:00 이후 2026-02-04 18:00 이전에 발생한 알람 시간순으로 알려줘
+         tool: get_alarms_by_time / 67.9s
+
+[get_device_alarms]
+  (16/55) 실행 중...  [FAIL] 장비 ID 2208에서 발생한 최근 2500시간 알람 이력 보여줘
+         tool: get_device_alarms_by_time / 1.6s
+         오류: 2 validation errors for call[get_device_alarms_by_time]
+start_time
+  Input should be a valid datetime or date, invalid date separator, expected `-` [type=datetime_from_date_parsing, input_value='2500 hours ago', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/datetime_from_date_parsing
+end_time
+  Input should be a valid datetime or date, input is too short [type=datetime_from_date_parsing, input_value='now', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/datetime_from_date_parsing
+  (17/55) 실행 중...  [FAIL] 장비 2276번의 최근 2500시간 알람 이력 알려줘
+         tool: get_device_alarms_by_time / 1.6s
+         오류: 2 validation errors for call[get_device_alarms_by_time]
+start_time
+  Input should be a valid datetime or date, invalid date separator, expected `-` [type=datetime_from_date_parsing, input_value='2500 hours ago', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/datetime_from_date_parsing
+end_time
+  Input should be a valid datetime or date, input is too short [type=datetime_from_date_parsing, input_value='now', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/datetime_from_date_parsing
+  (18/55) 실행 중...  [FAIL] 장비 ID 2273 최근 2500시간 알람 내역 뽑아줘
+         tool: get_device_alarms_by_time / 1.6s
+         오류: 2 validation errors for call[get_device_alarms_by_time]
+start_time
+  Input should be a valid datetime or date, invalid date separator, expected `-` [type=datetime_from_date_parsing, input_value='2500 hours ago', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/datetime_from_date_parsing
+end_time
+  Input should be a valid datetime or date, input is too short [type=datetime_from_date_parsing, input_value='now', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/datetime_from_date_parsing
+  (19/55) 실행 중...  [FAIL] 장비 2274에서 최근 2500시간 어떤 알람이 떴는지 봐줘
+         tool: get_device_alarms_by_time / 1.6s
+         오류: 2 validation errors for call[get_device_alarms_by_time]
+start_time
+  Input should be a valid datetime or date, invalid date separator, expected `-` [type=datetime_from_date_parsing, input_value='2500 hours ago', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/datetime_from_date_parsing
+end_time
+  Input should be a valid datetime or date, input is too short [type=datetime_from_date_parsing, input_value='now', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/datetime_from_date_parsing
+  (20/55) 실행 중...  [FAIL] 장비 ID 33077의 최근 알람 최대 10건 가져와줘, 2500시간 기준으로
+         tool: get_device_alarms / 5.4s
+
+[get_device_alarms_by_time]
+  (21/55) 실행 중...  [PASS] 장비명이 CRAC-6F A-101-17인 대상 2026-02-02 00:00부터 2026-02-04 00:0
+         tool: search_devices, get_device_alarms_by_time / 14.3s
+  (22/55) 실행 중...  [PASS] 장비 ID 1499의 2026-01-01부터 2026-02-01까지 알람 이력 보여줘
+         tool: get_device_alarms_by_time / 11.1s
+  (23/55) 실행 중...  [PASS] 장비 2208번에서 2026-01-01 ~ 2026-02-01 기간에 발생한 알람 뽑아줘
+         tool: get_device_alarms_by_time / 9.4s
+  (24/55) 실행 중...  [PASS] 장비 ID 1499의 2026-02-03 ~ 2026-02-06 알람 조회해줘, Warning 등급만
+         tool: get_device_alarms_by_time / 8.9s
+  (25/55) 실행 중...  [PASS] 장비 2276번의 2026-02-01 00:00 ~ 2026-03-01 00:00 알람 내역 최대 10건 확
+         tool: get_device_alarms_by_time / 7.1s
+
+[get_alarm_history]
+  (26/55) 실행 중...  [PASS] 장비 ID 1499의 최근 200일 알람 이력 보여줘
+         tool: get_alarm_history / 11.0s
+  (27/55) 실행 중...  [PASS] 장비 2208번 최근 200일 완료 알람 다 보여줘
+         tool: get_alarm_history / 8.3s
+  (28/55) 실행 중...  [PASS] 장비 17546의 지난 200일 알람 이력 최대 10건 조회해줘
+         tool: get_alarm_history / 7.9s
+  (29/55) 실행 중...  [PASS] 장비 ID 1499에서 최근 200일간 어떤 알람이 반복됐는지 이력 뽑아줘
+         tool: get_alarm_history / 10.7s
+  (30/55) 실행 중...  [PASS] 장비 ID 2208 최근 200일 알람 이력 확인해줘
+         tool: get_alarm_history / 8.6s
+
+[get_active_alarm_summary]
+  (31/55) 실행 중...  [PASS] 현재 활성 알람 요약 통계 보여줘
+         tool: get_active_alarm_summary / 2.7s
+  (32/55) 실행 중...  [PASS] 지금 데이터센터 전체 알람 상황 심각도별로 요약해줘
+         tool: get_active_alarm_summary / 3.3s
+  (33/55) 실행 중...  [PASS] 미확인(unacknowledged) 알람이 몇 건인지 포함해서 현황 알려줘
+         tool: get_active_alarm_summary / 3.2s
+  (34/55) 실행 중...  [PASS] 현재 Critical / Warning / Fatal 각각 몇 건인지 보여줘
+         tool: get_active_alarm_summary / 2.0s
+  (35/55) 실행 중...  [PASS] 분석 시작 전 전체 알람 현황 빠르게 파악하고 싶어
+         tool: get_active_alarm_summary / 2.9s
+
+[get_nearby_alarms]
+  (36/55) 실행 중...  [PASS] 장비 ID 15930 주변 장비들의 현재 알람 상태 알려줘
+         tool: get_nearby_alarms / 5.6s
+  (37/55) 실행 중...  [PASS] 장비 15931번이랑 같은 구역에서 현재 활성 알람 있는 장비 있어?
+         tool: get_nearby_alarms / 5.9s
+  (38/55) 실행 중...  [PASS] 장비 15932 근처에서 지금 어떤 알람이 뜨고 있는지 봐줘
+         tool: get_nearby_alarms / 7.3s
+  (39/55) 실행 중...  [PASS] 장비 ID 15930 주변 알람 최대 15건 조회해줘
+         tool: get_nearby_alarms / 5.6s
+  (40/55) 실행 중...  [PASS] 장비 ID 15931 근처에서 동시에 알람 터졌는지 확인해줘
+         tool: get_nearby_alarms / 5.5s
+
+[get_checkpoint_alarms]
+  (41/55) 실행 중...  [PASS] 체크포인트 "유효전력합" 기준으로 알람 현황 보여줘
+         tool: get_checkpoint_alarms / 8.4s
+  (42/55) 실행 중...  [PASS] checkpoint "Unit Warning Code AV"로 뜬 활성 알람 전체 뽑아줘
+         tool: get_checkpoint_alarms / 7.1s
+  (43/55) 실행 중...  [PASS] "통합알람" 체크포인트 알람 전 장비 기준으로 알려줘
+         tool: get_checkpoint_alarms / 5.5s
+  (44/55) 실행 중...  [PASS] 체크포인트 "upsAlarmGeneralWarning" 알람이 몇 개 장비에 떴는지 보여줘
+         tool: get_checkpoint_alarms / 5.3s
+  (45/55) 실행 중...  [PASS] "A 인버터 알람" 체크포인트 알람 최대 15건 조회해줘
+         tool: get_checkpoint_alarms / 5.6s
+
+[get_alarm_history_by_policy]
+  (46/55) 실행 중...  [PASS] "차단기#1" 알람이 최근 200일간 어떤 장비들에서 발생했는지 이력 보여줘
+         tool: get_alarm_history_by_policy / 10.1s
+  (47/55) 실행 중...  [PASS] 알람 정책 "부하 상태#1"로 뜬 이력 200일치 다 뽑아줘
+         tool: get_alarm_history_by_policy / 10.6s
+  (48/55) 실행 중...  [PASS] "통신 오류(Push)" 알람이 반복 발생하는 장비 패턴 파악하고 싶어, 200일 이력 조회해줘
+         tool: get_alarm_history_by_policy / 10.9s
+  (49/55) 실행 중...  [PASS] "고온냉동기 - Unit Warning Code AV 알람" 정책으로 최근 200일간 발생 이력 최대 15건
+         tool: get_alarm_history_by_policy / 9.2s
+  (50/55) 실행 중...  [PASS] "온도 변화량 감지 알람" 이력이 특정 장비에만 나타나는지 확인하려면 200일 이력 조회해줘
+         tool: get_alarm_history_by_policy / 8.8s
+
+[get_active_alarms_for_devices]
+  (51/55) 실행 중...  [PASS] 장비 ID 2208, 2276, 2273, 2274 네 대의 현재 활성 알람 한 번에 보여줘
+         tool: get_active_alarms_for_devices / 7.1s
+  (52/55) 실행 중...  [FAIL] 장비 목록 [2208, 2210, 2211]에서 지금 뜨고 있는 알람 전부 뽑아줘
+         tool: get_active_alarms_for_devices, get_active_alarms_for_devices, get_active_alarms_for_devices, get_active_alarms_for_devices, get_active_alarms_for_devices, get_active_alarms_for_devices, get_active_alarms_for_devices, get_active_alarms_for_devices, get_active_alarms_for_devices, get_active_alarms_for_devices, get_active_alarms_for_devices, get_active_alarms_for_devices / 17.2s
+         오류: Recursion limit of 25 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/GRAPH_RECURSION_LIMIT
+  (53/55) 실행 중...  [PASS] 장비 ID [17546, 2208, 2276]인데, 얘네 중에 지금 알람 있는 거 있어?
+         tool: get_active_alarms_for_devices / 6.6s
+  (54/55) 실행 중...  [PASS] 장비 ID [33077, 33034, 2273, 2274, 2276] 다섯 대 활성 알람 최대 10건 조회해
+         tool: get_active_alarms_for_devices / 8.1s
+  (55/55) 실행 중...  [PASS] 장비 ID [2210, 2211, 2274] 세 대 활성 알람 한꺼번에 확인해줘
+         tool: get_active_alarms_for_devices / 7.3s
+
+============================================================
+결과: 45/55 PASS
+저장: docs/test_results/20260522_163033_alarm_tools.md

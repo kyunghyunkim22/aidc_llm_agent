@@ -1,0 +1,42 @@
+
+
+╭──────────────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│                                                                              │
+│                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+│                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                FastMCP 3.2.4                                 │
+│                            https://gofastmcp.com                             │
+│                                                                              │
+│                  🖥  Server:      maria_mcp, 3.2.4                            │
+│                  🚀 Deploy free: https://horizon.prefect.io                  │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────────────────╮
+│                          🎉 Update available: 3.3.1                          │
+│                      Run: pip install --upgrade fastmcp                      │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+[05/26/26 16:19:27] INFO     Starting MCP server 'maria_mcp'    transport.py:301
+                             with transport 'http' on                           
+                             http://0.0.0.0:8001/mcp                            
+INFO:     Started server process [13489]
+INFO:     Waiting for application startup.
+2026-05-26 16:19:27,563 INFO mcp.server.streamable_http_manager - StreamableHTTP session manager started
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+2026-05-26 16:19:40,670 INFO mcp.server.streamable_http_manager - Created new transport with session ID: e6feac57f60741f29d1fd9afbaf2e708
+INFO:     127.0.0.1:54238 - "POST /mcp HTTP/1.1" 400 Bad Request
+2026-05-26 16:19:40,680 WARNING maria_mcp.auth - auth_failed client=127.0.0.1:54240 path=/mcp
+INFO:     127.0.0.1:54240 - "POST /mcp HTTP/1.1" 401 Unauthorized
+2026-05-26 16:19:40,687 WARNING maria_mcp.auth - auth_failed client=127.0.0.1:54242 path=/mcp
+INFO:     127.0.0.1:54242 - "POST /mcp HTTP/1.1" 401 Unauthorized
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+2026-05-26 16:19:51,439 INFO mcp.server.streamable_http_manager - StreamableHTTP session manager shutting down
+INFO:     Application shutdown complete.
+INFO:     Finished server process [13489]

@@ -1,0 +1,36 @@
+/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/langgraph/checkpoint/serde/encrypted.py:5: LangChainPendingDeprecationWarning: The default value of `allowed_objects` will change in a future version. Pass an explicit value (e.g., allowed_objects='messages' or allowed_objects='core') to suppress this warning.
+  from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer
+/Users/kyunghyun/workspace/aidc_llm_agent/scripts/run_test_questions.py:377: LangGraphDeprecatedSinceV10: create_react_agent has been moved to `langchain.agents`. Please update your import to `from langchain.agents import create_agent`. Deprecated in LangGraph V1.0 to be removed in V2.0.
+  agent = create_react_agent(model=llm, tools=tools, prompt=SYSTEM_PROMPT)
+총 10개 질문
+LLM: http://1.234.33.212:8000/v1 / /models/gemma-4-E4B-it-W4A16
+------------------------------------------------------------
+[INFO] MCP tool 16개 로드 완료
+
+[get_device_alarms]
+  (1/10) 실행 중...  [PASS] 장비 ID 2208에서 발생한 최근 200일 알람 이력 보여줘
+         tool: get_alarm_history / 8.3s
+  (2/10) 실행 중...  [PASS] 장비 2276번의 최근 200일 알람 이력 알려줘
+         tool: get_alarm_history / 5.6s
+  (3/10) 실행 중...  [PASS] 장비 ID 2273 최근 200일 알람 내역 뽑아줘
+         tool: get_alarm_history / 5.7s
+  (4/10) 실행 중...  [PASS] 장비 2274에서 최근 200일 어떤 알람이 떴는지 봐줘
+         tool: get_alarm_history / 5.5s
+  (5/10) 실행 중...  [PASS] 장비 ID 33077의 최근 알람 최대 10건 가져와줘, 200일 기준으로
+         tool: get_alarm_history / 8.8s
+
+[get_device_alarms_by_time]
+  (6/10) 실행 중...  [PASS] 장비명이 CRAC-6F A-101-17인 대상 2026-02-02 00:00부터 2026-02-04 00:0
+         tool: search_devices, get_device_alarms_by_time / 11.5s
+  (7/10) 실행 중...  [PASS] 장비 ID 1499의 2026-01-01부터 2026-02-01까지 알람 이력 보여줘
+         tool: get_device_alarms_by_time / 9.1s
+  (8/10) 실행 중...  [PASS] 장비 2208번에서 2026-01-01 ~ 2026-02-01 기간에 발생한 알람 뽑아줘
+         tool: get_device_alarms_by_time / 7.2s
+  (9/10) 실행 중...  [PASS] 장비 ID 1499의 2026-02-03 ~ 2026-02-06 알람 조회해줘, Warning 등급만
+         tool: get_device_alarms_by_time / 9.0s
+  (10/10) 실행 중...  [PASS] 장비 2276번의 2026-02-01 00:00 ~ 2026-03-01 00:00 알람 내역 최대 10건 확
+         tool: get_device_alarms_by_time / 6.9s
+
+============================================================
+결과: 10/10 PASS
+저장: docs/test_results/20260522_174447_device_alarms_200d.md

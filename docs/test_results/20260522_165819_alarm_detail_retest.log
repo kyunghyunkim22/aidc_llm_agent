@@ -1,0 +1,24 @@
+/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/langgraph/checkpoint/serde/encrypted.py:5: LangChainPendingDeprecationWarning: The default value of `allowed_objects` will change in a future version. Pass an explicit value (e.g., allowed_objects='messages' or allowed_objects='core') to suppress this warning.
+  from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer
+/Users/kyunghyun/workspace/aidc_llm_agent/scripts/run_test_questions.py:370: LangGraphDeprecatedSinceV10: create_react_agent has been moved to `langchain.agents`. Please update your import to `from langchain.agents import create_agent`. Deprecated in LangGraph V1.0 to be removed in V2.0.
+  agent = create_react_agent(model=llm, tools=tools, prompt=SYSTEM_PROMPT)
+총 5개 질문
+LLM: http://1.234.33.212:8000/v1 / /models/gemma-4-E4B-it-W4A16
+------------------------------------------------------------
+[INFO] MCP tool 16개 로드 완료
+
+[get_alarm_detail]
+  (1/5) 실행 중...  [PASS] 알람 ID 5732176의 상세 내용 보여줘
+         tool: get_alarm_detail / 9.1s
+  (2/5) 실행 중...  [PASS] 알람 번호 5732177이 뭔지 자세히 알고 싶어
+         tool: get_alarm_detail / 6.4s
+  (3/5) 실행 중...  [PASS] 알람 ID 5732178 조회해줘, 언제 발생했고 심각도가 어떻게 되는지
+         tool: get_alarm_detail / 5.7s
+  (4/5) 실행 중...  [PASS] 알람 ID 5732179의 원인 메시지 확인해줘
+         tool: get_alarm_detail / 5.3s
+  (5/5) 실행 중...  [PASS] 데이터센터 1에서 발생한 알람 ID 5797194 상세 정보 알려줘
+         tool: get_alarm_detail / 7.4s
+
+============================================================
+결과: 5/5 PASS
+저장: docs/test_results/20260522_165819_alarm_detail_retest.md

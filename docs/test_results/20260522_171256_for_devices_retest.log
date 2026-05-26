@@ -1,0 +1,24 @@
+/Users/kyunghyun/workspace/aidc_llm_agent/.venv/lib/python3.13/site-packages/langgraph/checkpoint/serde/encrypted.py:5: LangChainPendingDeprecationWarning: The default value of `allowed_objects` will change in a future version. Pass an explicit value (e.g., allowed_objects='messages' or allowed_objects='core') to suppress this warning.
+  from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer
+/Users/kyunghyun/workspace/aidc_llm_agent/scripts/run_test_questions.py:377: LangGraphDeprecatedSinceV10: create_react_agent has been moved to `langchain.agents`. Please update your import to `from langchain.agents import create_agent`. Deprecated in LangGraph V1.0 to be removed in V2.0.
+  agent = create_react_agent(model=llm, tools=tools, prompt=SYSTEM_PROMPT)
+총 5개 질문
+LLM: http://1.234.33.212:8000/v1 / /models/gemma-4-E4B-it-W4A16
+------------------------------------------------------------
+[INFO] MCP tool 16개 로드 완료
+
+[get_active_alarms_for_devices]
+  (1/5) 실행 중...  [PASS] 장비 ID 2208, 2276, 2273, 2274 네 대의 현재 활성 알람 한 번에 보여줘
+         tool: get_active_alarms_for_devices / 8.8s
+  (2/5) 실행 중...  [PASS] 장비 목록 [2208, 2210, 2211]에서 지금 뜨고 있는 알람 전부 뽑아줘
+         tool: get_active_alarms_for_devices / 6.7s
+  (3/5) 실행 중...  [PASS] 장비 ID [17546, 2208, 2276]인데, 얘네 중에 지금 알람 있는 거 있어?
+         tool: get_active_alarms_for_devices / 6.7s
+  (4/5) 실행 중...  [PASS] 장비 ID [33077, 33034, 2273, 2274, 2276] 다섯 대 활성 알람 최대 10건 조회해
+         tool: get_active_alarms_for_devices / 8.1s
+  (5/5) 실행 중...  [PASS] 장비 ID [2210, 2211, 2274] 세 대 활성 알람 한꺼번에 확인해줘
+         tool: get_active_alarms_for_devices / 7.2s
+
+============================================================
+결과: 5/5 PASS
+저장: docs/test_results/20260522_171256_for_devices_retest.md

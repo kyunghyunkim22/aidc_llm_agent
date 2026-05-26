@@ -1,0 +1,737 @@
+{
+  "phase": 3,
+  "recovered_from_log": "/tmp/phase3.log",
+  "env": {
+    "base_url": "http://1.234.33.212:8000/v1",
+    "model": "/models/gemma-4-E4B-it-W4A16",
+    "timestamp": "2026-05-20T17:36:28"
+  },
+  "params": {
+    "reps_override": null,
+    "reps_by_size": {
+      "1024": 10,
+      "4096": 10,
+      "8192": 10,
+      "16384": 8,
+      "32768": 5,
+      "65536": 3
+    },
+    "output_tokens": 256,
+    "sizes": [
+      1024,
+      4096,
+      8192,
+      16384,
+      32768,
+      65536
+    ],
+    "shuffle": true
+  },
+  "results": [
+    {
+      "target_input": 1024,
+      "actual_input_first": 1024,
+      "actual_input_all": [
+        1024,
+        1024,
+        1024,
+        1024,
+        1024,
+        1024,
+        1024,
+        1024,
+        1024,
+        1024
+      ],
+      "output_tokens": 256,
+      "reps_planned": 10,
+      "attempts": [
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 0.89,
+          "total_s": 6.76,
+          "output_tps": 43.6,
+          "rep": 1
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 0.75,
+          "total_s": 6.81,
+          "output_tps": 42.3,
+          "rep": 2
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 0.93,
+          "total_s": 6.8,
+          "output_tps": 43.6,
+          "rep": 3
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 0.73,
+          "total_s": 6.76,
+          "output_tps": 42.4,
+          "rep": 4
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 0.79,
+          "total_s": 6.8,
+          "output_tps": 42.6,
+          "rep": 5
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 0.76,
+          "total_s": 6.81,
+          "output_tps": 42.4,
+          "rep": 6
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 0.8,
+          "total_s": 6.78,
+          "output_tps": 42.9,
+          "rep": 7
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 0.78,
+          "total_s": 0.85,
+          "output_tps": 61.0,
+          "rep": 8
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 0.83,
+          "total_s": 6.94,
+          "output_tps": 41.9,
+          "rep": 9
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 0.88,
+          "total_s": 6.83,
+          "output_tps": 43.0,
+          "rep": 10
+        }
+      ],
+      "prompt_gen_error": null,
+      "ok_count": 10,
+      "fail_count": 0,
+      "ttft_s": {
+        "count": 10,
+        "min": 0.73,
+        "median": 0.795,
+        "mean": 0.8140000000000001,
+        "p95": 0.912,
+        "max": 0.93
+      },
+      "total_s": {
+        "count": 10,
+        "min": 0.85,
+        "median": 6.8,
+        "mean": 6.2139999999999995,
+        "p95": 6.8905,
+        "max": 6.94
+      },
+      "output_tps": {
+        "count": 10,
+        "min": 41.9,
+        "median": 42.75,
+        "mean": 44.57,
+        "p95": 53.16999999999998,
+        "max": 61.0
+      },
+      "total_tps": {
+        "count": 0,
+        "min": null,
+        "median": null,
+        "mean": null,
+        "p95": null,
+        "max": null
+      }
+    },
+    {
+      "target_input": 4096,
+      "actual_input_first": 4096,
+      "actual_input_all": [
+        4096,
+        4096,
+        4096,
+        4096,
+        4096,
+        4096,
+        4096,
+        4096,
+        4096,
+        4096
+      ],
+      "output_tokens": 256,
+      "reps_planned": 10,
+      "attempts": [
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 3.16,
+          "total_s": 9.42,
+          "output_tps": 40.9,
+          "rep": 1
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 3.16,
+          "total_s": 9.43,
+          "output_tps": 40.8,
+          "rep": 2
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 3.14,
+          "total_s": 9.44,
+          "output_tps": 40.7,
+          "rep": 3
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 3.22,
+          "total_s": 9.44,
+          "output_tps": 41.2,
+          "rep": 4
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 3.14,
+          "total_s": 9.43,
+          "output_tps": 40.7,
+          "rep": 5
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 3.14,
+          "total_s": 9.44,
+          "output_tps": 40.6,
+          "rep": 6
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 3.14,
+          "total_s": 9.43,
+          "output_tps": 40.7,
+          "rep": 7
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 3.04,
+          "total_s": 9.44,
+          "output_tps": 40.0,
+          "rep": 8
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 3.24,
+          "total_s": 9.43,
+          "output_tps": 41.3,
+          "rep": 9
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 3.33,
+          "total_s": 9.44,
+          "output_tps": 41.9,
+          "rep": 10
+        }
+      ],
+      "prompt_gen_error": null,
+      "ok_count": 10,
+      "fail_count": 0,
+      "ttft_s": {
+        "count": 10,
+        "min": 3.04,
+        "median": 3.1500000000000004,
+        "mean": 3.1710000000000003,
+        "p95": 3.2895,
+        "max": 3.33
+      },
+      "total_s": {
+        "count": 10,
+        "min": 9.42,
+        "median": 9.434999999999999,
+        "mean": 9.434,
+        "p95": 9.44,
+        "max": 9.44
+      },
+      "output_tps": {
+        "count": 10,
+        "min": 40.0,
+        "median": 40.75,
+        "mean": 40.88,
+        "p95": 41.629999999999995,
+        "max": 41.9
+      },
+      "total_tps": {
+        "count": 0,
+        "min": null,
+        "median": null,
+        "mean": null,
+        "p95": null,
+        "max": null
+      }
+    },
+    {
+      "target_input": 8192,
+      "actual_input_first": 8192,
+      "actual_input_all": [
+        8192,
+        8192,
+        8192,
+        8192,
+        8192,
+        8192,
+        8192,
+        8192,
+        8192,
+        8192
+      ],
+      "output_tokens": 256,
+      "reps_planned": 10,
+      "attempts": [
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 6.69,
+          "total_s": 13.31,
+          "output_tps": 38.6,
+          "rep": 1
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 6.68,
+          "total_s": 13.27,
+          "output_tps": 38.9,
+          "rep": 2
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 6.72,
+          "total_s": 13.37,
+          "output_tps": 38.5,
+          "rep": 3
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 6.59,
+          "total_s": 13.26,
+          "output_tps": 38.4,
+          "rep": 4
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 6.71,
+          "total_s": 13.26,
+          "output_tps": 39.0,
+          "rep": 5
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 6.65,
+          "total_s": 13.3,
+          "output_tps": 38.5,
+          "rep": 6
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 7.07,
+          "total_s": 13.69,
+          "output_tps": 38.7,
+          "rep": 7
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 6.65,
+          "total_s": 13.24,
+          "output_tps": 38.8,
+          "rep": 8
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 6.66,
+          "total_s": 13.23,
+          "output_tps": 39.0,
+          "rep": 9
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 6.73,
+          "total_s": 13.28,
+          "output_tps": 39.1,
+          "rep": 10
+        }
+      ],
+      "prompt_gen_error": null,
+      "ok_count": 10,
+      "fail_count": 0,
+      "ttft_s": {
+        "count": 10,
+        "min": 6.59,
+        "median": 6.6850000000000005,
+        "mean": 6.715,
+        "p95": 6.917,
+        "max": 7.07
+      },
+      "total_s": {
+        "count": 10,
+        "min": 13.23,
+        "median": 13.274999999999999,
+        "mean": 13.321,
+        "p95": 13.546,
+        "max": 13.69
+      },
+      "output_tps": {
+        "count": 10,
+        "min": 38.4,
+        "median": 38.75,
+        "mean": 38.75,
+        "p95": 39.055,
+        "max": 39.1
+      },
+      "total_tps": {
+        "count": 0,
+        "min": null,
+        "median": null,
+        "mean": null,
+        "p95": null,
+        "max": null
+      }
+    },
+    {
+      "target_input": 16384,
+      "actual_input_first": 16384,
+      "actual_input_all": [
+        16384,
+        16384,
+        16384,
+        16384,
+        16384,
+        16384,
+        16384,
+        16384
+      ],
+      "output_tokens": 256,
+      "reps_planned": 8,
+      "attempts": [
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 15.41,
+          "total_s": 22.54,
+          "output_tps": 35.9,
+          "rep": 1
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 15.27,
+          "total_s": 22.47,
+          "output_tps": 35.6,
+          "rep": 2
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 15.28,
+          "total_s": 22.41,
+          "output_tps": 35.9,
+          "rep": 3
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 15.36,
+          "total_s": 22.48,
+          "output_tps": 35.9,
+          "rep": 4
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 15.38,
+          "total_s": 22.48,
+          "output_tps": 36.1,
+          "rep": 5
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 15.48,
+          "total_s": 22.52,
+          "output_tps": 36.4,
+          "rep": 6
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 15.28,
+          "total_s": 22.4,
+          "output_tps": 36.0,
+          "rep": 7
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 15.29,
+          "total_s": 22.42,
+          "output_tps": 35.9,
+          "rep": 8
+        }
+      ],
+      "prompt_gen_error": null,
+      "ok_count": 8,
+      "fail_count": 0,
+      "ttft_s": {
+        "count": 8,
+        "min": 15.27,
+        "median": 15.325,
+        "mean": 15.34375,
+        "p95": 15.4555,
+        "max": 15.48
+      },
+      "total_s": {
+        "count": 8,
+        "min": 22.4,
+        "median": 22.475,
+        "mean": 22.465,
+        "p95": 22.532999999999998,
+        "max": 22.54
+      },
+      "output_tps": {
+        "count": 8,
+        "min": 35.6,
+        "median": 35.9,
+        "mean": 35.9625,
+        "p95": 36.295,
+        "max": 36.4
+      },
+      "total_tps": {
+        "count": 0,
+        "min": null,
+        "median": null,
+        "mean": null,
+        "p95": null,
+        "max": null
+      }
+    },
+    {
+      "target_input": 32768,
+      "actual_input_first": 32768,
+      "actual_input_all": [
+        32768,
+        32768,
+        32768,
+        32768,
+        32768
+      ],
+      "output_tokens": 256,
+      "reps_planned": 5,
+      "attempts": [
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 39.46,
+          "total_s": 47.2,
+          "output_tps": 33.1,
+          "rep": 1
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 39.34,
+          "total_s": 47.18,
+          "output_tps": 32.7,
+          "rep": 2
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 39.35,
+          "total_s": 47.18,
+          "output_tps": 32.7,
+          "rep": 3
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 39.35,
+          "total_s": 47.18,
+          "output_tps": 32.7,
+          "rep": 4
+        },
+        {
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "ttft_s": 39.45,
+          "total_s": 47.2,
+          "output_tps": 33.1,
+          "rep": 5
+        }
+      ],
+      "prompt_gen_error": null,
+      "ok_count": 5,
+      "fail_count": 0,
+      "ttft_s": {
+        "count": 5,
+        "min": 39.34,
+        "median": 39.35,
+        "mean": 39.39,
+        "p95": 39.458,
+        "max": 39.46
+      },
+      "total_s": {
+        "count": 5,
+        "min": 47.18,
+        "median": 47.18,
+        "mean": 47.188,
+        "p95": 47.2,
+        "max": 47.2
+      },
+      "output_tps": {
+        "count": 5,
+        "min": 32.7,
+        "median": 32.7,
+        "mean": 32.86,
+        "p95": 33.1,
+        "max": 33.1
+      },
+      "total_tps": {
+        "count": 0,
+        "min": null,
+        "median": null,
+        "mean": null,
+        "p95": null,
+        "max": null
+      }
+    },
+    {
+      "target_input": 65536,
+      "actual_input_first": null,
+      "actual_input_all": [],
+      "output_tokens": 256,
+      "reps_planned": 3,
+      "attempts": [
+        {
+          "ok": false,
+          "status": null,
+          "error": "ReadTimeout:",
+          "rep": 1
+        }
+      ],
+      "prompt_gen_error": null,
+      "ok_count": 0,
+      "fail_count": 1,
+      "ttft_s": {
+        "count": 0,
+        "min": null,
+        "median": null,
+        "mean": null,
+        "p95": null,
+        "max": null
+      },
+      "total_s": {
+        "count": 0,
+        "min": null,
+        "median": null,
+        "mean": null,
+        "p95": null,
+        "max": null
+      },
+      "output_tps": {
+        "count": 0,
+        "min": null,
+        "median": null,
+        "mean": null,
+        "p95": null,
+        "max": null
+      },
+      "total_tps": {
+        "count": 0,
+        "min": null,
+        "median": null,
+        "mean": null,
+        "p95": null,
+        "max": null
+      }
+    }
+  ]
+}
