@@ -19,6 +19,7 @@ dependencies = [
 maria-mcp = "maria_mcp.__main__:main"
 maria-mcp-diag = "maria_mcp.diagnostics:main"
 mcp-client-diag = "mcp_client.__main__:main"
+test-harness = "test_harness.repl:main"
 
 [dependency-groups]
 dev = [
@@ -31,7 +32,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/maria_mcp", "src/mcp_client"]
+packages = ["src/maria_mcp", "src/mcp_client", "src/test_harness"]
 
 [tool.uv]
 package = true
