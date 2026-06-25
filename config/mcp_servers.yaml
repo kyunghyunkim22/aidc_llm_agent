@@ -12,14 +12,15 @@ maria_mcp:
   headers:
     X-API-Key: "${MCP_API_KEY}"
 
+metric_mcp:
+  transport: streamable_http
+  url: "${METRIC_MCP_URL}"
+  headers:
+    X-API-Key: "${MCP_API_KEY}"
+
 # 추후 모듈 구현 시 활성화
 # rag_mcp:
 #   transport: streamable_http
 #   url: http://localhost:8002/mcp/
-#   headers:
-#     X-API-Key: "${MCP_API_KEY}"
-# metric_mcp:
-#   transport: streamable_http
-#   url: http://localhost:8003/mcp/
 #   headers:
 #     X-API-Key: "${MCP_API_KEY}"
