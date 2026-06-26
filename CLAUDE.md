@@ -81,7 +81,7 @@
 | llm_event_analysis_service | CPU | 상세 분석 REST API     | docs/spec/llm_event_analysis_spec.md | 미작성 |
 | maria_mcp | CPU | MariaDB 조회/저장 MCP (1차: 조회 only)  | docs/spec/maria_mcp_spec.md | **2차 구현 완료** |
 | rag_mcp | CPU | Qdrant 벡터 검색 MCP   | docs/spec/rag_mcp_spec.md | 미작성 |
-| metric_mcp | CPU | Druid 메트릭 조회 MCP   | docs/spec/metric_mcp_spec.md | 미작성 |
+| metric_mcp | CPU | Druid 메트릭 조회 MCP   | docs/spec/metric_mcp_spec.md | **1차 스캐폴딩 (Druid 접속 대기)** |
 | rag_preprocessor | CPU | 문서 임베딩 → Qdrant  | docs/spec/rag_preprocessor_spec.md | 미작성 |
 | llm_serving | GPU | vLLM 기반 LLM 서빙     | docs/spec/llm_serving_spec.md | 미작성 |
 | mcp_client | CPU | MCP 서버들에 연결해 LangChain tool 로 노출 (MultiServerMCPClient 래퍼) | (스펙 없음, 단순 래퍼) | **구현 완료** |
@@ -158,9 +158,9 @@ aidc_llm_agent/
 │   └── mcp_servers.yaml        # mcp_client 가 연결할 서버 목록
 ├── src/
 │   ├── maria_mcp/              # MariaDB 조회 MCP (구현됨)
+│   ├── metric_mcp/             # Druid 메트릭 조회 MCP (1차 스캐폴딩)
 │   ├── mcp_client/             # MultiServerMCPClient 래퍼 (구현됨)
 │   ├── rag_mcp/                # (예정)
-│   ├── metric_mcp/             # (예정)
 │   ├── event_collector/        # (예정)
 │   └── ...
 ├── docs/
@@ -190,6 +190,18 @@ aidc_llm_agent/
 - 진단: `uv run maria-mcp-diag` (DB 접속 + 샘플 ID + 카운트)
 - 통합 테스트: `uv run pytest tests/` (실 DB 접속 — 기본 10개 + RCA 25개 케이스)
 - **미포함 (TBD)**: 분석결과 저장(`llm_analysis_result`), Notification 관련 조회/저장.
+
+### metric_mcp (1차 스캐폴딩 — Druid 접속 대기)
+
+- 위치: `src/metric_mcp/`
+- 실행: `uv run metric-mcp` (또는 `uv run python -m metric_mcp`)
+- Transport: HTTP, 기본 포트 `8003`
+- 환경변수: `.env.example` 참고 (`DRUID_*`, `MCP_HOST/PORT`, `MCP_API_KEY`, `LOG_LEVEL`)
+- **인증**: maria_mcp 와 동일한 `X-API-Key` Starlette 미들웨어
+- 노출 tool 1개: `get_checkpoint_history(data_center_id, device_id, checkpoint_id, time)` — 닫힌 구간 [time-10min, time] 1분 rollup 시계열 (최대 11 row)
+- Datasource: `rollup_checkvalue_1min` (모든 ID는 VARCHAR — 입력도 `str`)
+- 진단: `uv run metric-mcp-diag` (Druid 접속 + datasource 확인 + last_value unwrap 표현식 검증)
+- **운영 Druid 접속 정보 확보 후**: diagnostics 실행 → `queries.SELECT_CHECKPOINT_HISTORY` 의 unwrap 표현식 (현재 `LATEST(last_value, 1024)`) 확정.
 
 ### mcp_client (구현 완료)
 
